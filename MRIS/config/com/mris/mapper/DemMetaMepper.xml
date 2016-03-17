@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="DemMeta">
+
+	<sql id="insertKeys">
+		metaid,name,num,cpscrq,version,syqdw,scdw,miji,format,xzqh,scale,resolution,datum,gcdatumn,prjname,cenlon,fdfs,zone,unit,gcxt,bgdw,phone,addr,email,url
+	</sql>
+
+	<sql id="insertValues">
+		#{metaid},#{name},#{num},#{cpscrq},#{version},#{syqdw},#{scdw},#{miji},#{format},#{xzqh},#{scale},#{resolution},#{datum},#{gcdatumn},#{prjname},#{cenlon},#{fdfs},#{zone},#{unit},#{gcxt},#{bgdw},#{phone},#{addr},#{email},#{url}
+	</sql>
+
+	<sql id="updateFields">
+		name=#{name},num=#{num},cpscrq=#{cpscrq},version=#{version},syqdw=#{syqdw},scdw=#{scdw},miji=#{miji},format=#{format},xzqh=#{xzqh},scale=#{scale},resolution=#{resolution},datum=#{datum},gcdatumn=#{gcdatumn},prjname=#{prjname},cenlon=#{cenlon},fdfs=#{fdfs},zone=#{zone},unit=#{unit},gcxt=#{gcxt},bgdw=#{bgdw},phone=#{phone},addr=#{addr},email=#{email},url=#{url}
+	</sql>
+	
+	<sql id="selectFields">
+		key,<include refid="insertKeys"/>
+	</sql>
+
+	<insert id="insert" parameterType="com.mris.bean.model.DemMeta">
+		insert into demmeta (
+		<include refid="insertKeys" />
+		) values(
+		<include refid="insertValues" />
+		)
+	</insert>
+
+	<update id="update" parameterType="com.mris.bean.model.DemMeta">
+		update demmeta
+		<include refid="updateFields"/>
+		where metaid=#{metaid}
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.String">
+		delete from demmeta where metaid=#{metaid}
+	</delete>
+	
+	<select id="getByMetaId" resultType="com.mris.bean.model.DemMeta" parameterType="java.lang.String">
+		select <include refid="selectFields"/> from demmeta where metaId=#{metaId}
+	</select>
+	
+	<select id="getByXZQH" resultType="com.mris.bean.model.DemMeta" parameterType="java.util.Map">
+		select <include refid="selectFields"/> from demmeta where xzqh like #{xzqh} limit #{limit} offset #{offset}
+	</select>
+
+</mapper>
